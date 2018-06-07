@@ -7,37 +7,31 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import pl.marchuck.parki.R
-import pl.marchuck.parki.base.BoundFragment
-import pl.marchuck.parki.base.CanNavigateActivities
-import pl.marchuck.parki.base.CanNavigateFragments
-import pl.marchuck.parki.base.NavigationService
+import pl.marchuck.parki.databinding.ForgotPasswordFragmentBinding
 import pl.marchuck.parki.databinding.LoginFragmentBinding
 
-
-class LoginFragment : BoundFragment() {
+class ForgotPasswordFragment : Fragment() {
 
     companion object {
-        fun newInstance() = LoginFragment()
+        fun newInstance() = ForgotPasswordFragment()
     }
 
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var viewModel: ForgotPasswordViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
         val binding = DataBindingUtil
-                .inflate<LoginFragmentBinding>(
+                .inflate<ForgotPasswordFragmentBinding>(
                         inflater,
-                        R.layout.login_fragment,
+                        R.layout.forgot_password_fragment,
                         container,
                         false
                 )
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-        viewModel.navigationService = NavigationService(
-                activity as CanNavigateFragments,
-                activity as CanNavigateActivities)
-        binding.loginViewModel = viewModel
+        viewModel = ViewModelProviders.of(this).get(ForgotPasswordViewModel::class.java)
+        binding.forgotPasswordViewModel = viewModel
         return binding.root
     }
 }

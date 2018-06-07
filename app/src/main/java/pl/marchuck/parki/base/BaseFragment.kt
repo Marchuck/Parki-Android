@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class BoundFragment : Fragment() {
+open class BoundFragment : Fragment() {
     private var _model: BaseViewModel<out ViewDataBinding>? = null
     private var _params: Bundle? = null
 
@@ -65,5 +65,10 @@ class BoundFragment : Fragment() {
 
     fun goingBack(): Boolean {
         return _model == null || _model!!.goingBack()
+    }
+
+
+    fun hideKeyboard() {
+        (activity as BaseActivity).hideKeyboard()
     }
 }

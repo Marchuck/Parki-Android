@@ -1,19 +1,20 @@
 package pl.marchuck.parki
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import pl.marchuck.parki.base.BaseActivity
 import pl.marchuck.parki.ui.login.LoginFragment
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
+
+    override fun getFragmentContainerId() = R.id.container
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, LoginFragment.newInstance())
-                    .commitNow()
+            navigateTo(LoginFragment.newInstance(), true)
         }
     }
+
 
 }

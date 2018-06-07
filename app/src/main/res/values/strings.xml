@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Parki</string>
+    <string name="password">Password</string>
+    <string name="email">E-Mail</string>
+    <string name="login">Login</string>
+    <string name="reset_password">Reset password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="text_trending">Trending</string>
+    <string name="text_nearby">Nearby</string>
+    <string name="text_profile">Profile</string>
 </resources>
