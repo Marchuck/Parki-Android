@@ -7,6 +7,17 @@ import dagger.android.support.DaggerApplication
 import pl.marchuck.parki.di.component.DaggerAppComponent
 
 class App : DaggerApplication() {
+
+
+    companion object {
+        var context: Context? = null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        context = this
+    }
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.builder().create(this)
     }
