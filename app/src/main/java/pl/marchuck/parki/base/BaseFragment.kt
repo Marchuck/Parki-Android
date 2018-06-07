@@ -14,7 +14,7 @@ open class BoundFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return if (_model != null) {
-            val binding = _model!!.createBinding(inflater!!, container!!)
+            val binding = _model!!.createBinding(inflater, container!!)
             _model?.setTheBinding(binding!!)
             binding?.root
         } else {

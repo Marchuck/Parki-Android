@@ -26,16 +26,6 @@ abstract class BaseActivity : AppCompatActivity(), CanNavigateFragments, CanNavi
         }
     }
 
-    override fun navigateTo(f: Fragment, containerId: Int, addToBackStack: Boolean) {
-        val trans = supportFragmentManager.beginTransaction()
-                .replace(containerId, f)
-
-        if (addToBackStack) {
-            trans.addToBackStack(null)
-        }
-        trans.commitAllowingStateLoss()
-    }
-
     override fun navigateTo(fragment: Fragment, addToBackStack: Boolean) = navigateTo(fragment, getFragmentContainerId(), addToBackStack)
 
     abstract fun getFragmentContainerId(): Int
@@ -43,7 +33,6 @@ abstract class BaseActivity : AppCompatActivity(), CanNavigateFragments, CanNavi
     override fun startForResult(intent: Intent, requestCode: Int) {
         startActivityForResult(intent, requestCode)
     }
-
 
     override fun onBackPressed() {
         if (hasSomeFragments()) {
@@ -53,9 +42,19 @@ abstract class BaseActivity : AppCompatActivity(), CanNavigateFragments, CanNavi
         super.onBackPressed()
     }
 
+    private fun navigateTo(f: Fragment, containerId: Int, addToBackStack: Boolean) {
+        val trans = supportFragmentManager.beginTransaction()
+                .replace(containerId, f)
+
+        if (addToBackStack) {
+            trans.addToBackStack(null)
+        }
+        trans.commitAllowingStateLoss()
+    }
+
     private fun popFragment() {
         supportFragmentManager.popBackStack()
     }
 
-    fun hasSomeFragments() = supportFragmentManager.fragments.size > 0 && supportFragmentManager.fragments[0] != null
+    private fun hasSomeFragments() = supportFragmentManager.fragments.size > 0 && supportFragmentManager.fragments[0] != null
 }

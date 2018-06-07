@@ -1,8 +1,8 @@
 package pl.marchuck.parki.base
 
+import android.support.v4.app.Fragment
+
 interface CanNavigateFragments {
 
-    fun navigateTo(f: android.support.v4.app.Fragment, containerId: Int, addToBackStack: Boolean)
-
-    fun navigateTo(f: android.support.v4.app.Fragment, addToBackStack: Boolean)
+    fun navigateTo(fragment: Fragment, addToBackStack: Boolean)
 }

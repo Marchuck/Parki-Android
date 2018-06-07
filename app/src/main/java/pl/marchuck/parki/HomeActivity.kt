@@ -1,8 +1,10 @@
 package pl.marchuck.parki
 
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.view.MenuItem
+import com.roughike.bottombar.BottomBar
 import pl.marchuck.parki.base.BaseActivity
 import pl.marchuck.parki.ui.nearby.NearbyFragment
 import pl.marchuck.parki.ui.profile.ProfileFragment
@@ -11,17 +13,18 @@ import pl.marchuck.parki.ui.trending.TrendingFragment
 
 class HomeActivity : BaseActivity() {
 
+    var prevItem: MenuItem? = null
+
     override fun getFragmentContainerId() = R.id.home_content
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
 
-        val bottomBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val bottomBar = findViewById<BottomBar>(R.id.bottomBar)
 
-        bottomBar.setOnNavigationItemSelectedListener { item ->
-
-            when (item.itemId) {
+        bottomBar.setOnTabSelectListener { itemId ->
+            when (itemId) {
                 R.id.action_trending -> {
                     openFragment(TrendingFragment.newInstance())
                 }
@@ -32,14 +35,22 @@ class HomeActivity : BaseActivity() {
                     openFragment(ProfileFragment.newInstance())
                 }
             }
-            false
         }
 
         if (savedInstanceState == null) {
-            bottomBar.menu.getItem(0).isChecked = true
+            bottomBar.getTabAtPosition(0).performClick()
+
             openFragment(TrendingFragment.newInstance())
         }
     }
 
     private fun openFragment(fragment: Fragment) = navigateTo(fragment, false)
+}
+
+private fun MenuItem.clearColorFilter() {
+    icon.clearColorFilter()
+}
+
+private fun MenuItem.setColorFilter(color: Int) {
+    icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 }

@@ -2,7 +2,6 @@ package pl.marchuck.parki.ui.login
 
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
-import android.util.Patterns
 import io.reactivex.Single
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -56,6 +55,6 @@ class LoginViewModel : ViewModel() {
         navigationService?.openForgotPasswordView()
     }
 
-    fun String.isValidEmail() = this.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
-    fun String.isValidPassword() = this.isNotEmpty() && length > 6 //todo validate password from validator (inject it)
+    fun String.isValidEmail() = true//this.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    fun String.isValidPassword() = true//this.isNotEmpty() && length > 6 //todo validate password from validator (inject it)
 }
