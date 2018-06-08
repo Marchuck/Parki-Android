@@ -44,13 +44,14 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (hasSomeFragments()) {
+            popFragment()
+            return
+        }
+        super.onBackPressed()
+    }
+
     private fun openFragment(fragment: Fragment) = navigateTo(fragment, false)
 }
 
-private fun MenuItem.clearColorFilter() {
-    icon.clearColorFilter()
-}
-
-private fun MenuItem.setColorFilter(color: Int) {
-    icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-}

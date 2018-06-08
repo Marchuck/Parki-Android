@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -15,6 +16,18 @@
         android:background="@color/green"
         tools:context=".ui.nearby.NearbyFragment">
 
+        <pl.bclogic.pulsator4droid.library.PulsatorLayout
+            android:id="@+id/pulsator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:pulsatorState="@{viewModel.pulsatorState}"
+            app:pulse_color="@color/colorAccent"
+            app:pulse_count="5"
+            app:pulse_duration="3000"
+            app:pulse_interpolator="Linear"
+            app:pulse_repeat="0"
+            app:pulse_startFromScratch="true" />
+
         <TextView
             android:id="@+id/locationData"
             android:layout_width="wrap_content"
@@ -22,6 +35,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:text="@{viewModel.locationData}"
+            android:visibilityFromText="@{viewModel.errorLabel}"
             android:textColor="@android:color/white"
             android:textSize="35sp"
             android:textStyle="italic|bold"
@@ -35,26 +49,24 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:text="@{viewModel.errorLabel}"
+            android:visibilityFromText="@{viewModel.errorLabel}"
             android:textColor="@color/red"
             android:textSize="35sp"
             android:textStyle="bold|normal"
             tools:text="error" />
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:isVisible="@{viewModel.progressVisible}"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
         <Button
-            android:text="GET location"
-            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/error"
-            android:onClick="@{()-> viewModel.startUpdates()}" />
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_button"
+            android:onClick="@{()-> viewModel.startUpdates()}"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="GET location"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 </layout>

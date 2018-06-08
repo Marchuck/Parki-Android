@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/orange"
-    tools:context=".ui.trending.TrendingFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Trending"
-        android:textColor="@android:color/white"
-        android:textSize="35sp"
-        android:textStyle="italic|bold" />
+    <data>
 
-</FrameLayout>
+        <variable
+            name="viewModel"
+            type="pl.marchuck.parki.ui.trending.TrendingViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/orange">
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:queryTextListener="@{viewModel}"
+            tools:text="search..." />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchView"
+            android:recyclerViewSetup="@{viewModel}"
+            android:trendingItems="@{viewModel.trendingItems}" />
+
+    </RelativeLayout>
+
+</layout>

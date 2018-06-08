@@ -34,27 +34,20 @@ abstract class BaseActivity : AppCompatActivity(), CanNavigateFragments, CanNavi
         startActivityForResult(intent, requestCode)
     }
 
-    override fun onBackPressed() {
-        if (hasSomeFragments()) {
-            popFragment()
-            return
-        }
-        super.onBackPressed()
-    }
-
     private fun navigateTo(f: Fragment, containerId: Int, addToBackStack: Boolean) {
-        val trans = supportFragmentManager.beginTransaction()
+        val transaction = supportFragmentManager.beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(containerId, f)
 
         if (addToBackStack) {
-            trans.addToBackStack(null)
+            transaction.addToBackStack(null)
         }
-        trans.commitAllowingStateLoss()
+        transaction.commitAllowingStateLoss()
     }
 
-    private fun popFragment() {
+    fun popFragment() {
         supportFragmentManager.popBackStack()
     }
 
-    private fun hasSomeFragments() = supportFragmentManager.fragments.size > 0 && supportFragmentManager.fragments[0] != null
+    fun hasSomeFragments() = supportFragmentManager.fragments.size > 0 && supportFragmentManager.fragments[0] != null
 }

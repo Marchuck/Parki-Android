@@ -6,6 +6,9 @@ import android.support.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
+import pl.marchuck.parki.ui.nearby.PulsatorState;
+
 public class LoginBindings {
 
     @BindingAdapter("android:error")

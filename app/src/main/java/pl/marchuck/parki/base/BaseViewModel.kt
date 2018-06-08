@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
+@Suppress("UNCHECKED_CAST")
 abstract class BaseViewModel<T : ViewDataBinding> : BaseObservable() {
     var binding: T? = null
 

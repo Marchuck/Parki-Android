@@ -22,22 +22,13 @@ class NearbyFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val binding = DataBindingUtil
-                .inflate<NearbyFragmentBinding>(
-                        inflater,
-                        R.layout.nearby_fragment,
-                        container,
-                        false
-                )
+                .inflate<NearbyFragmentBinding>(inflater, R.layout.nearby_fragment, container, false)
 
         viewModel = ViewModelProviders.of(this).get(NearbyViewModel::class.java)
-        // TODO: Use the ViewModel
-
         viewModel.host = this
-
 
         binding.viewModel = viewModel
 
         return binding.root
     }
-
 }

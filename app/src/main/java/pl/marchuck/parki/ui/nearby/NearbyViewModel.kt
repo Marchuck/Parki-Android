@@ -4,12 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
 import android.content.Context.LOCATION_SERVICE
-import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -19,11 +20,16 @@ import pl.marchuck.parki.App
 
 class NearbyViewModel : ViewModel() {
 
+    val pulsatorState = ObservableField(PulsatorState.STOPPED)
+
     val locationData = ObservableField("")
 
-    val errorLabel = ObservableField("")
+    val buttonVisibility = ObservableField(true)
 
-    val progressVisible = ObservableBoolean(false)
+    @Volatile
+    var location: Location? = null
+
+    val errorLabel = ObservableField("")
 
     var host: NearbyFragment? = null
 
@@ -31,12 +37,26 @@ class NearbyViewModel : ViewModel() {
 
     @SuppressLint("MissingPermission")
     fun startUpdates() {
-        progressVisible.set(true)
+        pulsatorState.set(PulsatorState.STARTED)
+        locationData.set("Fetching your location...")
+        buttonVisibility.set(false)
         errorLabel.set(null)
         addDisposable(RxPermissions(host?.activity!!)
                 .requestLocation()
                 .subscribe({
-                    obtainLocationManager().requestLocationUpdates("fused", 0L, 0f, locationListener)
+
+                    obtainLocationManager().requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            400, 0f, locationListener)
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        if (this.location == null) {
+                            pulsatorState.set(PulsatorState.STOPPED)
+                            locationData.set("")
+                            errorLabel.set("Failed fetch location, try again later")
+                        } else {
+
+                        }
+                    }, 5000)
 
                 }, {
                     errorLabel.set("Failed to fetch location, try again")
@@ -47,11 +67,14 @@ class NearbyViewModel : ViewModel() {
 
     private fun obtainLocationManager() = App.context?.getSystemService(LOCATION_SERVICE) as LocationManager
 
-    fun onLocationReceived(_location: Location) {
-        val location = _location
+    fun onLocationReceived(location: Location) {
+        this.location = location
+
         obtainLocationManager().removeUpdates(locationListener)
-        progressVisible.set(false)
-        locationData.set("Your location is $location")
+        pulsatorState.set(PulsatorState.STOPPED)
+
+        errorLabel.set("")
+        locationData.set("Your location is ${String.format("(%.3f, %.3f)", location.latitude, location.longitude)}")
     }
 
     override fun onCleared() {
@@ -63,6 +86,7 @@ class NearbyViewModel : ViewModel() {
     //define the listener
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
+            println("onLocationChanged called with $location")
             onLocationReceived(location)
         }
 
