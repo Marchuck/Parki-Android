@@ -13,7 +13,11 @@ class TrendingViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         textView = itemView?.findViewById(R.id.text1)
     }
 
-    fun bind(str: String) {
-        textView?.text = str
+    fun bind(str: String?) {
+        if (str == null) {
+            textView?.invalidate()
+        } else {
+            textView?.text = str
+        }
     }
 }

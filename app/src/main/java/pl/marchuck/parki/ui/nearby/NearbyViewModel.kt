@@ -45,7 +45,7 @@ class NearbyViewModel : ViewModel() {
                 .requestLocation()
                 .subscribe({
 
-                    obtainLocationManager().requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    obtainLocationManager().requestLocationUpdates("fused",
                             400, 0f, locationListener)
 
                     Handler(Looper.getMainLooper()).postDelayed({

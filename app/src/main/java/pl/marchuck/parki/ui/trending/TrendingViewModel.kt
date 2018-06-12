@@ -48,4 +48,5 @@ class TrendingViewModel : ViewModel() {
             "ABDEFGH",
             "ABDEFGHI"
     )
+
 }

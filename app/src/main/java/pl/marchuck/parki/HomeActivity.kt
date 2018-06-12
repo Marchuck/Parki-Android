@@ -1,9 +1,7 @@
 package pl.marchuck.parki
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.MenuItem
 import com.roughike.bottombar.BottomBar
 import pl.marchuck.parki.base.BaseActivity
 import pl.marchuck.parki.ui.nearby.NearbyFragment
@@ -12,8 +10,6 @@ import pl.marchuck.parki.ui.trending.TrendingFragment
 
 
 class HomeActivity : BaseActivity() {
-
-    var prevItem: MenuItem? = null
 
     override fun getFragmentContainerId() = R.id.home_content
 
@@ -42,14 +38,6 @@ class HomeActivity : BaseActivity() {
 
             openFragment(TrendingFragment.newInstance())
         }
-    }
-
-    override fun onBackPressed() {
-        if (hasSomeFragments()) {
-            popFragment()
-            return
-        }
-        super.onBackPressed()
     }
 
     private fun openFragment(fragment: Fragment) = navigateTo(fragment, false)

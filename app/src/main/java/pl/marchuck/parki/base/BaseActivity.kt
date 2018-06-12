@@ -44,10 +44,4 @@ abstract class BaseActivity : AppCompatActivity(), CanNavigateFragments, CanNavi
         }
         transaction.commitAllowingStateLoss()
     }
-
-    fun popFragment() {
-        supportFragmentManager.popBackStack()
-    }
-
-    fun hasSomeFragments() = supportFragmentManager.fragments.size > 0 && supportFragmentManager.fragments[0] != null
 }
