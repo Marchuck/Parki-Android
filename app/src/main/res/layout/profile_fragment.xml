@@ -1,18 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/purple"
-    tools:context=".ui.profile.ProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Profile"
-        android:textColor="@android:color/white"
-        android:textSize="35sp"
-        android:textStyle="italic|bold" />
-</FrameLayout>
+        <variable
+            name="viewModel"
+            type="pl.marchuck.parki.ui.profile.ProfileViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/purple">
+
+        <TextView
+            android:id="@+id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center|top"
+            android:text="Profile"
+            android:textColor="@android:color/white"
+            android:textSize="35sp"
+            android:textStyle="italic|bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/profile"
+            android:layout_centerHorizontal="true"
+            android:image="@{viewModel.image}"
+            tools:background="@color/colorPrimaryDark" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:isVisible="@{viewModel.nameFieldVisible}"
+                android:onClick="@{()->viewModel.onEditName()}"
+                android:text="@{viewModel.editedUserName}"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                android:textStyle="italic|bold"
+                tools:text="JANUSZ" />
+
+            <EditText
+                android:id="@+id/name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:editFinished="@{viewModel}"
+                android:gravity="center"
+                android:inputType="text"
+                android:isVisible="@{viewModel.nameEditFieldVisible}"
+                animationDuration="0"
+                android:text="@={viewModel.editedUserName}"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                android:textStyle="italic|bold"
+                android:visibility="gone"
+                tools:text="JANUSZ"
+                tools:visibility="visible" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

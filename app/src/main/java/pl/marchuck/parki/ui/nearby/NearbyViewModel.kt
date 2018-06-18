@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
 import android.content.Context.LOCATION_SERVICE
-import android.databinding.ObservableField
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -16,24 +15,26 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import pl.marchuck.parki.App
+import pl.marchuck.parki.base.MutableData
 
 
 class NearbyViewModel : ViewModel() {
 
-    val pulsatorState = ObservableField(PulsatorState.STOPPED)
+    val pulsatorState = MutableData(PulsatorState.STOPPED)
 
-    val locationData = ObservableField("")
+    val locationData = MutableData("")
 
-    val buttonVisibility = ObservableField(true)
+    val buttonVisibility = MutableData(true)
 
     @Volatile
     var location: Location? = null
 
-    val errorLabel = ObservableField("")
+    val errorLabel = MutableData("")
 
     var host: NearbyFragment? = null
 
     val disposable = CompositeDisposable()
+
 
     @SuppressLint("MissingPermission")
     fun startUpdates() {

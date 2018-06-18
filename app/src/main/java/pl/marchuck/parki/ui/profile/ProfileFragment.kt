@@ -1,13 +1,14 @@
 package pl.marchuck.parki.ui.profile
 
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import pl.marchuck.parki.R
+import pl.marchuck.parki.databinding.ProfileFragmentBinding
 
 class ProfileFragment : Fragment() {
 
@@ -15,17 +16,27 @@ class ProfileFragment : Fragment() {
         fun newInstance() = ProfileFragment()
     }
 
+
     private lateinit var viewModel: ProfileViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.profile_fragment, container, false)
+
+
+        val binding = DataBindingUtil
+                .inflate<ProfileFragmentBinding>(
+                        inflater,
+                        R.layout.profile_fragment,
+                        container,
+                        false
+                )
+
+        viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+
+        binding.viewModel = viewModel
+        return binding.root
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }
